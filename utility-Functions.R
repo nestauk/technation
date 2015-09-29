@@ -1,9 +1,25 @@
-#Utility function to get and parse JSON data from APIs
-#Argument: a url
+
+#GetParseData function to get and parse JSON data from APIs
+#Argument: a url and a delay
 #Returns the parsed JSON object
-GetParseData <- function(x) {
+GetParseData <- function(x,y=1) {
+        insertDelay(y)
         return(fromJSON(getURL(x)))
-        Sys.sleep(sample(seq(1,1.5,0.1),1))
+}
+
+#GetParseHtml function
+#Arguments: a URL and the delay to introduce
+#Returns a parsed html, after a delay
+GetParseHtml <- function(x,y=1) {
+        return(htmlParse(getURL(x)))
+}
+
+
+#insertDelay utility function.
+#Arguments: the top length to delay for
+#returns a delay.
+insertDelay <- function(x) {
+        Sys.sleep(sample(seq(0,x,0.1),1))
 }
 
 

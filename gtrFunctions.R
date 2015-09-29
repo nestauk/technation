@@ -34,8 +34,9 @@ GetGtrData <- function(term,field) {
 }
         
 #ExtractGtrData function to put the data into a data.frame
-#Arguments: A list of JSON objects with information on RC-funded projects
+#Arguments: A JSON object with information on RC-funded projects
 #Returns a data-frame with that same data.
+#NB: We will ldply this over 
 
 ExtractGtrData <- function(x) {
         #Create new, smaller objects to make it easier to read below
@@ -56,6 +57,25 @@ ExtractGtrData <- function(x) {
         return(myDf)
 }
 
+#GetOrganisationAddress function to do exactly that.
+#Arguments: x is the URL for an organisation (e.g. see above)
+#Returns its address
+
+GetOrganisationAddress <- function(x) {
+        #Space the requests
+        Sys.sleep(sample(seq(0,1,0.1),1))
+        
+        orgContent <- content(GET(as.character(x)))
+        
+        #Object to shorten the syntax
+        
+        addy <- c(name=orgContent$organisationOverview$organisation$name,
+                orgContent$organisationOverview$organisation$address)
+        
+        #As dataframe
+        addy.df <- as.data.frame(addy,row.names=NULL)
+        return(addy.df)
+}
 
 
                 
